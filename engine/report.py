@@ -28,3 +28,14 @@ def _png(fig):
     fig.savefig(buf, format="png", dpi=160, bbox_inches="tight")
     plt.close(fig)
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+
+def render_pdf(context_data):
+    """ฟังก์ชันสำหรับเรนเดอร์ข้อมูลเป็นไฟล์ PDF ด้วย WeasyPrint และ Jinja2"""
+    # ตัวอย่างโครงสร้างการเรนเดอร์ (ปรับเปลี่ยนตามเทมเพลตที่คุณใช้งานจริง)
+    env = Environment()
+    # สมมติว่ามีการโหลด HTML template และใส่ข้อมูล context_data ลงไป
+    html_content = "<html><body><h1>Solar Report</h1></body></html>" 
+    
+    # แปลง HTML เป็น PDF bytes
+    pdf_bytes = HTML(string=html_content, base_url=".").write_pdf()
+    return pdf_bytes
