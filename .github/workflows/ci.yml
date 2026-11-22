@@ -1,0 +1,9 @@
+﻿name: CI
+on: [push, pull_request]
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t solar-engine ./engine
+      - run: docker run --rm solar-engine sh -c "pip install -q pytest httpx && pytest -q"

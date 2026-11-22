@@ -1,0 +1,43 @@
+﻿services:
+  - type: pserv
+    name: solar-engine
+    runtime: docker
+    rootDir: engine
+    region: singapore
+    plan: standard
+    envVars:
+      - key: ENGINE_KEY
+        generateValue: true
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+
+  - type: web
+    name: solar-web
+    runtime: node
+    rootDir: web
+    region: singapore
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: ENGINE_HOSTPORT
+        fromService: { type: pserv, name: solar-engine, property: hostport }
+      - key: ENGINE_KEY
+        fromService: { type: pserv, name: solar-engine, envVarKey: ENGINE_KEY }
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: GOOGLE_MAPS_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
