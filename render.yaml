@@ -1,10 +1,10 @@
 ﻿services:
-  - type: pserv
+  - type: web
     name: solar-engine
     runtime: docker
     rootDir: engine
     region: singapore
-    plan: standard
+    plan: free
     envVars:
       - key: ENGINE_KEY
         generateValue: true
@@ -18,7 +18,7 @@
     runtime: node
     rootDir: web
     region: singapore
-    plan: starter
+    plan: free
     buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
@@ -26,9 +26,9 @@
       - key: NODE_VERSION
         value: "20"
       - key: ENGINE_HOSTPORT
-        fromService: { type: pserv, name: solar-engine, property: hostport }
+        fromService: { type: web, name: solar-engine, property: hostport }
       - key: ENGINE_KEY
-        fromService: { type: pserv, name: solar-engine, envVarKey: ENGINE_KEY }
+        fromService: { type: web, name: solar-engine, envVarKey: ENGINE_KEY }
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_SERVICE_ROLE_KEY
