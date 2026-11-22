@@ -1,10 +1,12 @@
 ﻿services:
   - type: web
     name: solar-engine
-    runtime: docker
+    runtime: node
     rootDir: engine
     region: singapore
     plan: free
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: ENGINE_KEY
         generateValue: true
