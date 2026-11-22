@@ -11,8 +11,8 @@ export async function POST(req: Request) {
     customer_email: user.email,
     line_items: [{ quantity: 1, price_data: { currency: 'thb', unit_amount: item.amount, product_data: { name: item.name } } }],
     metadata: { user_id: user.id, product, project_id: projectId ?? '' },
-    success_url: product === 'single' ? ${SITE}/report.html?id= : ${SITE}/?credits=ok,
-    cancel_url: ${SITE}/,
+    success_url: product === 'single' ? `${SITE}/report.html?id=${projectId}` : `${SITE}/?credits=ok`,
+cancel_url: `${SITE}/`,
   });
   return json({ url: session.url });
 }
