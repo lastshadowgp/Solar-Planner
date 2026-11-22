@@ -1,1 +1,5 @@
-﻿export const GET = () => Response.json({ ok: true });
+﻿import { NextResponse } from 'next/server';
+
+export async function GET() {
+  return NextResponse.json({ status: 'ok', service: 'solar-web' });
+}
